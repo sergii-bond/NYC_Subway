@@ -41,18 +41,30 @@ def plot_weather_data(turnstile_weather):
         #geom_point() + \
     turnstile_weather.rename(columns = lambda x: x.replace(' ', '_').lower(), inplace=True)
     #turnstile_weather.columns.values
+    #q = """
+    #        select hour, unit, avg(ENTRIESn_hourly) as avg_eph from turnstile_weather
+    #        where day_of_week > 0 and day_of_week < 6
+    #        group by hour, unit
+    #    """
     q = """
-            select day_of_week, avg(ENTRIESn_hourly) as avg_eph  from turnstile_weather
-            group by day_of_week
+            select rain, hour, avg(ENTRIESn_hourly) as avg_eph from turnstile_weather
+            group by rain, hour
         """
     df1 = pandasql.sqldf(q.lower(), locals())
+    #df1 = df1[df1.avg_eph > df1.avg_eph.mean()]
     #df1
     #print df1.columns.values
     #df1 = pandasql.sqldf(q, locals())
-    plot = ggplot(df1, aes(x = 'factor(day_of_week)', y = 'avg_eph')) + \
-        geom_bar(stat = 'bar', color = 'green', fill = 'yellow') + \
-        xlab("Day of Week") + ylab("Average entries/hour") + \
-        ggtitle('Average number of entries per hour depending on a day of the week')
+    #plot = ggplot(df1, aes(x = 'hour', y = 'avg_eph', color = 'unit')) + \
+    #    geom_point() +\
+    #    scale_color_brewer(type = 'qual') +\
+    #    xlab("Hour") + ylab("Average entries/hour") + \
+    #    ggtitle('Average number of entries per hour on weekdays, categorized by stations')
+    plot = ggplot(df1, aes(x = 'hour', y = 'avg_eph', color = 'rain')) + \
+        geom_point() +\
+        geom_line() +\
+        xlab("Hour") + ylab("Average entries/hour") + \
+        ggtitle('Average number of entries per hour, categorized by rain')
     return plot
 
 if __name__ == '__main__':
