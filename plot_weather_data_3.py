@@ -52,18 +52,21 @@ def plot_weather_data(turnstile_weather):
             group by day_of_week
         """
     df1 = pandasql.sqldf(q.lower(), locals())
-    df1.sort('day_of_week')
+    df1['day_of_week'] = pandas.Categorical(df1['day_of_week'], categories = orderlist, ordered = True)
+    df1 = df1.sort('day_of_week')
     #print df1.columns.values
     #df1 = pandasql.sqldf(q, locals())
     #plot = ggplot(df1, aes(x = 'factor(day_of_week)', y = 'avg_eph')) + \
     #plot = ggplot(df1, aes(x = 'factor(day_of_week, levels = orderlist)', y = 'avg_eph')) + \
-    plot = ggplot(df1, aes(x = 'factor(day_of_week, levels = orderlist)', y = 'avg_eph')) + \
-        geom_bar(stat = 'bar', color = 'green', fill = 'yellow') + \
-        xlab("Day of Week") + ylab("Average entries/hour") + \
-        ggtitle('Average number of entries per hour depending on a day of the week')
-    return plot
+    fig, ax = plt.subplots()
+    ax.set_title('Average number of entries per hour depending on a day of the week')
+    ax.set_xlabel("Day of Week")
+    ax.set_ylabel("Average entries/hour")
+    ax.set_xticklabels(orderlist)
+    ax.bar(np.arange(len(df1.day_of_week)), df1.avg_eph, color = 'green')
+    return plt
 
 if __name__ == '__main__':
     df = read_csv("turnstile_data_master_with_weather.csv")
     df = df[0:100000]
-    print plot_weather_data(df)
+    plot_weather_data(df).show()

@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
-#matplotlib.style.use('ggplot')
+matplotlib.style.use('ggplot')
 
 def entries_histogram(turnstile_weather):
     '''
@@ -28,7 +28,7 @@ def entries_histogram(turnstile_weather):
     
     plt.figure()
     #plt.legend()
-    #plt.set_title('Entries per hour on rainy and non-rainy days')
+    plt.title('Histogram of entries per hour on rainy and non-rainy days')
     plt.xlim(0, 4000)
     plt.xlabel('ENTRIESn_Hourly')
     s1 = turnstile_weather['ENTRIESn_hourly'][turnstile_weather.rain == 1]

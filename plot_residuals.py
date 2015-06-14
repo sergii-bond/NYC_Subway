@@ -16,6 +16,9 @@ def plot_residuals(turnstile_weather, predictions):
     '''
     
     plt.figure()
+    plt.title("Distribution of residuals")
+    plt.xlabel("Difference between actual and predicted entries per hour")
+    plt.ylabel("Ratio")
     (turnstile_weather['ENTRIESn_hourly'] - predictions).plot(kind = 'hist',
-            bins = 30)
+            bins = 100)
     return plt
