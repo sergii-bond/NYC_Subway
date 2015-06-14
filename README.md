@@ -34,7 +34,7 @@ Description of results:
 We want to see whether the usage of subway in New York increases or decreases depending on rain.  
 Independent variable: rainy days  
 Dependent variable: Number of subway entries per hour  
-Null hypothesis: Average numbers of entries per hour are the same on rainy or non-rainy days.  
+Null hypothesis: given two random samples of average numbers of subway entries per hour, the first calculated from population of subway entries on rainy days and the second calculated from the population of subway entries on non-rainy days, the probability that the first average will be higher than the second is 0.5.  
 Alternative Hypothesis: Average numbers of entries per hour are different on rainy or non-rainy days.  
 Type of test: Mann-Whitney U test  
 Two tailed p value: p = 0.0498  
